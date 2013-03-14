@@ -46,10 +46,10 @@
     _.bindAll(this, '_onModelEvent', '_unbindModelEvents', '_proxyAdd'
               , '_proxyReset', '_proxyRemove', '_proxyChange');
 
-    parent.bind('add', this._proxyAdd);
-    parent.bind('remove', this._proxyRemove);
-    parent.bind('reset', this._proxyReset);
-    parent.bind('all', this._proxyChange);
+    parent.on('add', this._proxyAdd);
+    parent.on('remove', this._proxyRemove);
+    parent.on('reset', this._proxyReset);
+    parent.on('all', this._proxyChange);
 
     if (this.beforeInitialize) {
       this.beforeInitialize.apply(this, arguments);
@@ -354,7 +354,7 @@
    * @param {Object} model
    */
   Subset._unbindModelEvents = function (model) {
-    model.unbind('all', this._onModelEvent);
+    model.off('all', this._onModelEvent);
   };
 
   _.extend(Backbone.Subset.prototype, Backbone.Collection.prototype, Subset);
