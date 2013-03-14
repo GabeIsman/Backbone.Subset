@@ -66,13 +66,9 @@
   };
 
   /**
-   * Default exclusiveSubset implementation
-   *
-   * @return {Boolean}
+   * Default exclusiveSubset to false
    */
-  Subset.exclusiveSubset = function () {
-    return false;
-  };
+  Subset.exclusiveSubset = false;
 
   /**
    * Resets the parent collection
@@ -105,7 +101,7 @@
     xored_ids = xor(ids, _.pluck(models, 'id'));
 
     parent.reset(parent_models, _.extend({silent: true}, options));
-    if (this.exclusiveSubset()) {
+    if (_.result(this, 'exclusiveSubset')) {
       parent.trigger('reset', this, _.extend({model_ids: xored_ids, exclusive_collection: this}, options));
     } else {
       parent.trigger('reset', this, _.extend({model_ids: xored_ids}, options));
@@ -170,7 +166,7 @@
    * @return {Object} model
    */
   Subset.add = function (model, options) {
-    if (this.exclusiveSubset()) {
+    if (_.result(this, 'exclusiveSubset')) {
       options = _.extend(options, {exclusive_collection: this});
     }
 
@@ -198,7 +194,7 @@
    * @return {Object} model
    */
   Subset.remove = function (model, options) {
-    if (this.exclusiveSubset()) {
+    if (_.result(this,'exclusiveSubset')) {
       options = _.extend(options, {exclusive_collection: this});
     }
 
